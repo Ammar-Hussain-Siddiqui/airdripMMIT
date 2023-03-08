@@ -54,18 +54,17 @@ const Task = () => {
   async function bindchack() {
     var key = location.state.toString()
     console.log(key)
-    fetch('http://localhost:8081/chackmail?email=' + key)
+    fetch('http://161.35.74.42:8081/chackmail?email=' + key)
       .then(function (res) {
-        // console.log(res);
         return res.json()
       })
       .then(function (data) {
-        console.log(data)
         let a = data[0].address.toString()
         if (a.length >= 20) {
           console.log(data[0].address)
           var str = data[0].address
           let newStr = str.substring(0, 5) + '...' + str.substring(6, 11)
+          refrellChack(key)
           document.getElementById('badres').innerHTML =
             'Binded Address   :   ' + newStr
           document.getElementById('bnd').style.display = 'none'
@@ -78,12 +77,29 @@ const Task = () => {
   }
   bindchack()
 
+  async function refrellChack(key){
+    fetch('http://161.35.74.42:8081/chackReferralParent?referralParent=' + 'All/'+key+'/Friends')
+    .then(function (res) {
+      return res.json()
+    })
+    .then(function (data) {
+      console.log(data)
+     if(data.length > 0) {
+      document.getElementById('countrefrell').innerHTML = data.length + ' MMIT';
+     }else{
+
+     }
+    })
+  }
+
+
+
   async function bind() {
     var emaile = asd.toString()
     var adrs = document.getElementById('Address').value
     if (adrs.length >= 40) {
       console.log(adrs)
-      const url = 'http://localhost:8081/insaddress'
+      const url = 'http://161.35.74.42:8081/insaddress'
 
       let data = {
         adrs: adrs,
@@ -133,6 +149,7 @@ const Task = () => {
 
   useEffect(() => {
     chack()
+    bindchack()
   }, [])
 
   function Handletokenhit() {
@@ -143,7 +160,7 @@ const Task = () => {
     }
 
     axios
-      .post('http://localhost:8081/tokenhandle', data)
+      .post('http://161.35.74.42:8081/tokenhandle', data)
       .then(function (response) {
         console.log(response.data)
 
@@ -248,7 +265,7 @@ const Task = () => {
               <Grid item lg={1} md={0.5} sm={0.1}></Grid>
               <Grid item lg={8} md={8.5} sm={8.4} xs={8}>
                 <p id="task_text">
-                  <Button style={{ color: 'black', textAlign: 'center' }}>
+                  <Button id='dawnload_sbg'>
                     Download SBG Wallet App
                   </Button>
                 </p>
@@ -363,7 +380,7 @@ const Task = () => {
               <Grid item lg={8} md={8.5} sm={8.4} xs={8}>
                 <p id="task_text">
                   <Button
-                    style={{ color: 'black' }}
+                 id='dawnload_sbg'
                     href="https://twitter.com/mangomanintell"
                   >
                     Follow on Twitter
@@ -468,7 +485,7 @@ const Task = () => {
                 <p id="task_text">
                   <Button
                     href="https://instagram.com/mangomanintell?igshid=YmMyMTA2M2Y="
-                    style={{ color: 'black', textAlign: 'center' }}
+                    id='dawnload_sbg'
                   >
                     Join Us On Instagram
                   </Button>
@@ -512,9 +529,9 @@ const Task = () => {
                 <p id="task_text">
                   <Button
                     href="https://t.me/mangomanintell"
-                    style={{ color: 'black', textAlign: 'center' }}
+                    id='dawnload_sbg'
                   >
-                    Join Us On Instagram
+                    Join Us On Telegram
                   </Button>
                 </p>
               </Grid>
@@ -555,9 +572,9 @@ const Task = () => {
                 <p id="task_text">
                   <Button
                     onClick={Friends}
-                    style={{ color: 'black', textAlign: 'center' }}
+                    id='dawnload_sbg'
                   >
-                    Share With Your Friends
+                    Share With Your Friends 
                   </Button>
                 </p>
               </Grid>
@@ -574,7 +591,7 @@ const Task = () => {
                 }}
               >
                 <p className="text_coin">
-                  <b>1 MMIT</b>
+                  <b id='countrefrell' >0 MMIT</b>
                 </p>
               </Grid>
             </Grid>

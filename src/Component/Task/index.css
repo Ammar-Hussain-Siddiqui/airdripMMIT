@@ -33,6 +33,11 @@
   text-align: justify;
 }
 
+#dawnload_sbg{
+  color: black;
+  text-align: center;
+}
+
 .mmit_icon {
   width: 100%;
   height: auto;
@@ -107,6 +112,13 @@ form{
     height: auto;
     margin: 10px;
     margin-top: 16px;
+}
+
+#dawnload_sbg{
+  font-size: 10px;
+}
+.mmit_icon{
+  margin-top: 21px;
 }
 }
 

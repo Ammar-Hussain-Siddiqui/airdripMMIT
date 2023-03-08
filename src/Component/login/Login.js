@@ -48,7 +48,7 @@ document.body.style.color = "white";
           })
           Key.push(0)
     } else {
-  fetch("http://localhost:8081/login?email="+email+"&password="+password)
+  fetch("http://161.35.74.42:8081/login?email="+email+"&password="+password)
     .then(function(res) {
         return res.json();
     })
@@ -92,6 +92,7 @@ document.body.style.color = "white";
   var Name = document.getElementById('rname').value;
   var userName = document.getElementById('uname').value;
   var Email = document.getElementById('uemail').value;
+  var Referral = document.getElementById('referral').value;
 
   var emailValue = Email;
   var emailPattern = /^[^\s@]+@gmail\.com$/;
@@ -99,8 +100,6 @@ document.body.style.color = "white";
   var password = document.getElementById('upassword').value;
 
  
-
-
    if(Name == '' || Name == null || Name == undefined){						
       Swal.fire({
         icon: 'error',
@@ -137,12 +136,11 @@ document.body.style.color = "white";
       })	
    }
    else{
-    fetch("http://localhost:8081/chackuser?username="+userName)
+    fetch("http://161.35.74.42:8081/chackuser?username="+userName)
     .then(function(res) {
         return res.json();
     })
     .then(function(data) {
-
         if (data.length == 1) {
   
             data.forEach(element => {
@@ -155,7 +153,7 @@ document.body.style.color = "white";
               })	
             })
         }else if(data.length == 0){
-                fetch("http://localhost:8081/chackmail?email="+Email)
+                fetch("http://161.35.74.42:8081/chackmail?email="+Email)
                 .then(function(res) {
                     return res.json();
                 })
@@ -171,52 +169,71 @@ document.body.style.color = "white";
                             text: 'Email already Exists',
                           })	
                         })
-                    }else if(data.length == 0){
-                        const url = 'http://localhost:8081/register';
+                    }else {
+                    
+                      fetch("http://161.35.74.42:8081/refrellCode?Code="+Referral)
+                      .then(function(res) {
+                          return res.json();
+                          console.log(res);
+                      })
+                      .then(function(data) {
+            
+                          if (data.length == 0) {
+                                Swal.fire({
+                                  icon: 'error',
+                                  title: 'Oops...',
+                                  text: 'Referral Code Not Exists',
+                                })	 
+                          }else {
+                          const url = 'http://161.35.74.42:8081/register';
 
-                        let data = {
-                            name : Name ,
-                            username : userName ,
-                            email : Email,
-                            password : password ,
-                        }
-            
-                        let request = new Request(url, {
-                        method: 'POST',
-                        body: JSON.stringify(data),
-                        headers: new Headers({
-                            'Content-Type': 'application/json'
-                        })
-                        });
-            
-                        fetch(request)
-                        .then(function() {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Registration Success',
-                                showConfirmButton: false,
-                                timer: 900
-                            })
-                        signin.click();
-                        });
-                    }
-                
+                          let data = {
+                              name : Name ,
+                              username : userName ,
+                              email : Email,
+                              password : password ,
+                              refrellCode : 'All/'+Email+'/Friends',
+                              referralParent : Referral,
+                          }
+
+                          let request = new Request(url, {
+                          method: 'POST',
+                          body: JSON.stringify(data),
+                          headers: new Headers({
+                              'Content-Type': 'application/json'
+                          })
+                          });
+
+                          fetch(request)
+                          .then(function() {
+                              Swal.fire({
+                                  icon: 'success',
+                                  title: 'Registration Success',
+                                  showConfirmButton: false,
+                                  timer: 900
+                              })
+                          signin.click();
+                          });
+                  }
                });
                
 
-        }
+                    }
     
    });
 
 
-    
-   };	
-   
-  }
 
-  useEffect(() => {
+
+
+    
+        }
+      })
+    }
+  }
+useEffect(() => {
 console.log(Key)
-  },[Key]);
+},[Key]);
   return (
     <div style={{color:'white'}}>
       <MDBContainer className="p-3 my-5 d-flex flex-column w-50">
@@ -262,7 +279,7 @@ console.log(Key)
               id="form2"
               type="password"
             />
-
+            {/* 
             <div className="d-flex justify-content-between mx-4 mb-4">
               <MDBCheckbox
                 name="flexCheck"
@@ -270,8 +287,8 @@ console.log(Key)
                 id="flexCheckDefault"
                 label="Remember me"
               />
-              {/* <a href="!#">Forgot password?</a> */}
-            </div>
+              <a href="!#">Forgot password?</a>
+            </div> */}
 
             <Button onClick={login} className="mb-4 w-100">Sign in</Button>
             <Link to={'/'} state={Key} id="wallets" style={{display: 'none'}} className="mb-4 w-100">Home</Link>
@@ -301,21 +318,29 @@ console.log(Key)
               type="email"
               required
             />
+          
             <MDBInput
               wrapperClass="mb-4"
               label="Password"
               id="upassword"
               type="password"
               required
-            />
 
-            <div className="d-flex justify-content-center mb-4">
+            /> 
+          <MDBInput
+            wrapperClass="mb-4"
+            label="Referral Code (Optional)"
+            id="referral"
+            type="text"
+            required
+          />
+            {/* <div className="d-flex justify-content-center mb-4">
               <MDBCheckbox
                 name="flexCheck"
                 id="flexCheckDefault"
                 label="I have read and agree to the terms"
               />
-            </div>
+            </div> */}
 
             <Button onClick={register} className="mb-4 w-100">Sign up</Button>
           </MDBTabsPane>

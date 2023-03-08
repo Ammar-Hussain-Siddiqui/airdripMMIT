@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 07, 2023 at 02:48 PM
+-- Generation Time: Mar 08, 2023 at 09:50 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.2
 
@@ -34,16 +34,22 @@ CREATE TABLE `register` (
   `username` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
   `password` varchar(20) NOT NULL,
-  `address` varchar(100) NOT NULL
+  `address` varchar(100) NOT NULL,
+  `refrellCode` varchar(100) NOT NULL,
+  `referralParent` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `register`
 --
 
-INSERT INTO `register` (`id`, `name`, `username`, `email`, `password`, `address`) VALUES
-(14, 'Ammar', 'ammar9087', 'ammar@gmail.com', '123456', 'asdasddddddddddddddddddasdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsd'),
-(15, 'Hassan', 'Hassan asif', 'hassan@gmail.com', '123456', '0xC9ea92cB3E7636417cD062A7e449cB69045Ab07C');
+INSERT INTO `register` (`id`, `name`, `username`, `email`, `password`, `address`, `refrellCode`, `referralParent`) VALUES
+(14, 'Ammar', 'ammar9087', 'ammar@gmail.com', '123456', 'asdasddddddddddddddddddasdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsd', '', ''),
+(15, 'Hassan', 'Hassan asif', 'hassan@gmail.com', '123456', '0xC9ea92cB3E7636417cD062A7e449cB69045Ab07C', '', ''),
+(16, 'Ammar Siddiqui', 'Ammar1441', 'ammarsiddiqui622@gmail.com', '123456', 'asdsadsadsaasdddddddddddddddd342222222222222222222222222222222222222222222222', 'All/ammarsiddiqui622@gmail.com/Friends', ''),
+(17, 'rohan', 'rohan123', 'rohan123@gmail.com', '123456', '', 'All/rohan123@gmail.com/Friends', ''),
+(18, 'rohan', 'rohan1441', 'rohan12sdfsd3@gmail.com', '123456', '', 'All/rohan12sdfsd3@gmail.com/Friends', 'All/ammarsiddiqui622@gmail.com/Friends'),
+(19, 'Sheikh', 'Sheikh123', 'Sheikh@gmail.com', '123456', '', 'All/Sheikh@gmail.com/Friends', 'All/ammarsiddiqui622@gmail.com/Friends');
 
 -- --------------------------------------------------------
 
@@ -88,7 +94,7 @@ ALTER TABLE `wallet_data`
 -- AUTO_INCREMENT for table `register`
 --
 ALTER TABLE `register`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `wallet_data`
